@@ -1,0 +1,6 @@
+E:\JobSearch\UTRC-SoftwareChallenge\SocialNetwork\SocialNetwork\SocialNetwork\bin\Debug\SocialNetwork.exe.config
+E:\JobSearch\UTRC-SoftwareChallenge\SocialNetwork\SocialNetwork\SocialNetwork\bin\Debug\SocialNetwork.exe
+E:\JobSearch\UTRC-SoftwareChallenge\SocialNetwork\SocialNetwork\SocialNetwork\bin\Debug\SocialNetwork.pdb
+E:\JobSearch\UTRC-SoftwareChallenge\SocialNetwork\SocialNetwork\SocialNetwork\obj\Debug\SocialNetwork.csprojResolveAssemblyReference.cache
+E:\JobSearch\UTRC-SoftwareChallenge\SocialNetwork\SocialNetwork\SocialNetwork\obj\Debug\SocialNetwork.exe
+E:\JobSearch\UTRC-SoftwareChallenge\SocialNetwork\SocialNetwork\SocialNetwork\obj\Debug\SocialNetwork.pdb
