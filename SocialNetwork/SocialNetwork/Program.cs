@@ -11,6 +11,7 @@ namespace SocialNetwork
         static void Main(string[] args)
         {
             Console.WriteLine("Hello");
+            string[] lines = System.IO.File.ReadAllLines("SocialNetwork.txt");
         }
     }
 }
