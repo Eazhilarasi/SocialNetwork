@@ -5,3 +5,4 @@ E:\JobSearch\UTRC-SoftwareChallenge\SocialNetwork\SocialNetwork\SocialNetwork\ob
 E:\JobSearch\UTRC-SoftwareChallenge\SocialNetwork\SocialNetwork\SocialNetwork\obj\Debug\SocialNetwork.exe
 E:\JobSearch\UTRC-SoftwareChallenge\SocialNetwork\SocialNetwork\SocialNetwork\obj\Debug\SocialNetwork.pdb
 E:\JobSearch\UTRC-SoftwareChallenge\SocialNetwork\SocialNetwork\SocialNetwork\bin\Debug\Source\SocialNetwork.txt
+E:\JobSearch\UTRC-SoftwareChallenge\SocialNetwork\SocialNetwork\SocialNetwork\bin\Debug\Source\TextFile.txt

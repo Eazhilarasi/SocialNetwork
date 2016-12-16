@@ -9,11 +9,11 @@ namespace SocialNetwork
 {
     class Program
     {
+        static Dictionary<String, string> friendsMapping = new Dictionary<string, string>();
         static void Main(string[] args)
-        {
-            Dictionary<String, string> friendsMapping = new Dictionary<string, string>();
+        { 
             Console.WriteLine("Hello");
-            string[] friends = System.IO.File.ReadAllLines(@"Source\SocialNetwork.txt");
+            string[] friends = System.IO.File.ReadAllLines(@"Source\TextFile.txt");
             foreach(string pair in friends)
             {
                 string[] members = pair.Split(',');
@@ -30,6 +30,54 @@ namespace SocialNetwork
             }
 
             Console.WriteLine("Total number of members in Social network is" + friendsMapping.Count);
+            distanceBetween();
+        }
+
+        static void distanceBetween()
+        {
+            string A = "A";
+            string B = "B";
+            string ties ="";
+            //Get values of key A 
+            string[] values = friendsMapping[A].Split(',');
+            //Check the values if there is B
+            foreach(string value in values)
+            {
+                ties = A;
+                if(value.Equals(B))
+                {
+                    Console.WriteLine(ties + "->" + B);
+                    break;
+                }
+            }
+            foreach(string value in values)
+            {
+                string[] j = friendsMapping[value].Split(',');
+                foreach(string i in j)
+                {
+                    if(i.Equals(B))
+                    {
+                        ties = ties + i;
+                        Console.WriteLine(ties + "->" + B);
+                        break;
+                    }
+                }
+                foreach(string i in j)
+                {
+                    string[] x = friendsMapping[i].Split(',');
+                    foreach (string y in x)
+                    {
+                        if (y.Equals(B))
+                        {
+                            ties = ties + i + y;
+                            Console.WriteLine(ties + "->" + B);
+                            break;
+                        }
+                    }
+                }
+
+            }
+
         }
     }
 }
