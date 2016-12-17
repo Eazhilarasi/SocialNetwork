@@ -1,7 +1,7 @@
 ﻿A,C
 B,E
-C,F
 C,D
+C,F
 F,B
 D,E
 E,B

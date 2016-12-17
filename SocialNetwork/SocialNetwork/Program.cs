@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SocialNetwork.Model;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -30,7 +31,54 @@ namespace SocialNetwork
             }
 
             Console.WriteLine("Total number of members in Social network is" + friendsMapping.Count);
-            distanceBetween();
+            Console.WriteLine("---------------------------------");
+            foreach(KeyValuePair<string,string> value in friendsMapping)
+            {
+                Console.WriteLine(value.Key + " -> " + value.Value);
+            }
+            Console.WriteLine("---------------------------------");
+            // distanceBetween();
+            tiesBetweenAandB();
+        }
+
+        private static void tiesBetweenAandB()
+        {
+            string A = "A";
+            string B = "B";
+            Queue<string> nodesToVisit = new Queue<string>();
+            List<Node> visitedNodes = new List<Node>();
+
+            nodesToVisit.Enqueue(A);
+
+            while(nodesToVisit.Count != 0)
+            {
+                string node = nodesToVisit.Peek();
+                string[] values = friendsMapping[node].Split(',');
+                //Check the values if there is B
+                foreach (string value in values)
+                {
+                    if (value.Equals(B))
+                    {
+                        nodesToVisit.Clear();
+                    }
+                    else
+                    {
+                        nodesToVisit.Enqueue(value);
+                        
+                    }
+                }
+                if (nodesToVisit.Count > 0)
+                {
+                    nodesToVisit.Dequeue();
+                }
+                visitedNodes.Add(new Node(node,true));
+      
+            }
+            foreach (Node n in visitedNodes)
+            {
+                Console.WriteLine(n.name);
+            }
+
         }
 
         static void distanceBetween()
