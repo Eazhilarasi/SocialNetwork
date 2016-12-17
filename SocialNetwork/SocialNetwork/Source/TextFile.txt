@@ -4,4 +4,4 @@ C,D
 C,F
 F,B
 D,E
-E,B
+A,Z

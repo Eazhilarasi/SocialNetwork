@@ -14,7 +14,7 @@ namespace SocialNetwork
         static void Main(string[] args)
         { 
             Console.WriteLine("Hello");
-            string[] friends = System.IO.File.ReadAllLines(@"Source\SocialNetwork.txt");
+            string[] friends = System.IO.File.ReadAllLines(@"Source\TextFile.txt");
             foreach(string pair in friends)
             {
                 string[] members = pair.Split(',');
@@ -41,28 +41,36 @@ namespace SocialNetwork
             }
 
             Console.WriteLine("Total number of members in Social network is" + friendsMapping.Count);
-          /*  Console.WriteLine("---------------------------------");
+            Console.WriteLine("---------------------------------");
             foreach(KeyValuePair<string,string> value in friendsMapping)
             {
                 Console.WriteLine(value.Key + " -> " + value.Value);
             }
-            Console.WriteLine("---------------------------------");*/
+            Console.WriteLine("---------------------------------");
             // distanceBetween();
             tiesBetweenAandB();
         }
 
         private static void tiesBetweenAandB()
         {
-            string A = "STACEY_STRIMPLE";
-            string B = "RICH_OMLI";
+           // string A = "STACEY_STRIMPLE";
+          //  string B = "RICH_OMLI";
+            string A = "A";
+            string B = "B";
             Queue<string> nodesToVisit = new Queue<string>();
-            List<Node> visitedNodes = new List<Node>();
+            List<string> visitedNodes = new List<string>();
 
             nodesToVisit.Enqueue(A);
-
+            int numberOfLevels = 0;
             while(nodesToVisit.Count != 0)
             {
+                numberOfLevels += 1;
                 string node = nodesToVisit.Peek();
+                while(visitedNodes.Contains(node))
+                {
+                    nodesToVisit.Dequeue();
+                    node = nodesToVisit.Peek();
+                }
                 string[] values = friendsMapping[node].Split(',');
                 //Check the values if there is B
                 foreach (string value in values)
@@ -81,13 +89,14 @@ namespace SocialNetwork
                 {
                     nodesToVisit.Dequeue();
                 }
-                visitedNodes.Add(new Node(node,true));
+                visitedNodes.Add(node);
       
             }
-            foreach (Node n in visitedNodes)
+            foreach (string n in visitedNodes)
             {
-                Console.WriteLine(n.name);
+                Console.WriteLine(n);
             }
+            Console.WriteLine("no of ties is " + numberOfLevels);
 
         }
 
