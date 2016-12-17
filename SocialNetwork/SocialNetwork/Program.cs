@@ -14,7 +14,7 @@ namespace SocialNetwork
         static void Main(string[] args)
         { 
             Console.WriteLine("Hello");
-            string[] friends = System.IO.File.ReadAllLines(@"Source\TextFile.txt");
+            string[] friends = System.IO.File.ReadAllLines(@"Source\SocialNetwork.txt");
             foreach(string pair in friends)
             {
                 string[] members = pair.Split(',');
@@ -28,23 +28,33 @@ namespace SocialNetwork
                 {
                     friendsMapping[members[0]] = members[1];
                 }
+                if (friendsMapping.ContainsKey(members[1]))
+                {
+                    string value = friendsMapping[members[1]];
+                    value = value + ',' + members[0];
+                    friendsMapping[members[1]] = value;
+                }
+                else
+                {
+                    friendsMapping[members[1]] = members[0];
+                }
             }
 
             Console.WriteLine("Total number of members in Social network is" + friendsMapping.Count);
-            Console.WriteLine("---------------------------------");
+          /*  Console.WriteLine("---------------------------------");
             foreach(KeyValuePair<string,string> value in friendsMapping)
             {
                 Console.WriteLine(value.Key + " -> " + value.Value);
             }
-            Console.WriteLine("---------------------------------");
+            Console.WriteLine("---------------------------------");*/
             // distanceBetween();
             tiesBetweenAandB();
         }
 
         private static void tiesBetweenAandB()
         {
-            string A = "A";
-            string B = "B";
+            string A = "STACEY_STRIMPLE";
+            string B = "RICH_OMLI";
             Queue<string> nodesToVisit = new Queue<string>();
             List<Node> visitedNodes = new List<Node>();
 
