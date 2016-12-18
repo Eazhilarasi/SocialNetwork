@@ -1,0 +1,8 @@
+﻿A,C
+C,D
+Z,B
+C,F
+D,G
+D,H
+F,I
+A,Z

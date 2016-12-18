@@ -9,12 +9,12 @@ namespace SocialNetwork.Model
     public class Node
     {
         public string name { get; set; }
-        public bool isVisited { get; set; }
+        public int level { get; set; }
 
-        public Node(string name, bool isVisited)
+        public Node(string name, int level)
         {
             this.name = name;
-            this.isVisited = isVisited;
+            this.level = level;
         }
     }
 }
