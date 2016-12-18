@@ -10,15 +10,29 @@ namespace SocialNetwork
 {
     class Program
     {
-        static Dictionary<String, string> friendsMapping = new Dictionary<string, string>();
+        static Dictionary<String, string> friendsMapping;
         static void Main(string[] args)
-        { 
-            Console.WriteLine("Hello");
-            string[] friends = System.IO.File.ReadAllLines(@"Source\TextFile1.txt");
-            foreach(string pair in friends)
+        {             
+            Console.WriteLine("Welcome to Social Network :)");
+            //Creates a Hash table with each member in the Social network and all friends related to that member.
+            CreateFriendsMapping();
+            //Calculates the minimum number of levels required from the 
+            //source person to reach the destination person on Social network 
+            string A = "STACEY_STRIMPLE";
+            string B = "RICH_OMLI";
+            CalculateTiesBetweenAandB(A,B);
+        }
+
+        private static void CreateFriendsMapping()
+        {
+            friendsMapping = new Dictionary<string, string>();
+            //read the data text file line by line into an array
+            string[] friends = System.IO.File.ReadAllLines(@"Source\SocialNetwork.txt");
+            //store the member as key and friends as value separated by comma.
+            foreach (string pair in friends)
             {
                 string[] members = pair.Split(',');
-                if(friendsMapping.ContainsKey(members[0]))
+                if (friendsMapping.ContainsKey(members[0]))
                 {
                     string value = friendsMapping[members[0]];
                     value = value + ',' + members[1];
@@ -39,185 +53,87 @@ namespace SocialNetwork
                     friendsMapping[members[1]] = members[0];
                 }
             }
-
-            Console.WriteLine("Total number of members in Social network is" + friendsMapping.Count);
-            Console.WriteLine("---------------------------------");
-            foreach(KeyValuePair<string,string> value in friendsMapping)
-            {
-                Console.WriteLine(value.Key + " -> " + value.Value);
-            }
-            Console.WriteLine("---------------------------------");
-            // distanceBetween();*/
-            tiesBetweenAandB();
+            Console.WriteLine("Total number of members in Social network is " + friendsMapping.Count);
         }
 
-      /*  private static void tiesBetweenAandB()
+        private static void CalculateTiesBetweenAandB(string source,string destination)
         {
-           // string A = "STACEY_STRIMPLE";
-           // string B = "RICH_OMLI";
-            string A = "A";
-            string B = "B";
-            Queue<string> nodesToVisit = new Queue<string>();
-            List<string> visitedNodes = new List<string>();
+            string A = source;
+            string B = destination;
+          
+            //A queue to maintain the friends to visit to check if B is in their friends list
+            Queue<string> friendsToVisit = new Queue<string>();
+            //List that holds the freinds visited and their level from the source A.
+            List<Node> visitedFriendsLevel = new List<Node>();
+            List<string> visitedFriends = new List<string>();
 
-            nodesToVisit.Enqueue(A);
-            int numberOfLevels = 0;
-            while(nodesToVisit.Count != 0)
-            {
-                numberOfLevels += 1;
-                string node = nodesToVisit.Peek();
-                while(visitedNodes.Contains(node))
-                {
-                    nodesToVisit.Dequeue();
-                    node = nodesToVisit.Peek();
-                }
-                string[] values = friendsMapping[node].Split(',');
-                //Check the values if there is B
-                foreach (string value in values)
-                {
-                    if (value.Equals(B))
-                    {
-                        nodesToVisit.Clear();
-                    }
-                    else
-                    {
-                        nodesToVisit.Enqueue(value);
-                    }
-                }
-                if (nodesToVisit.Count > 0)
-                {
-                    nodesToVisit.Dequeue();
-                }
-                visitedNodes.Add(node);
-      
-            }
-            foreach (string n in visitedNodes)
-            {
-                Console.WriteLine(n);
-            }
-            Console.WriteLine("no of ties is " + numberOfLevels);
+            Console.WriteLine("Crunching data please wait...");
 
-        }*/
-
-        private static void tiesBetweenAandB()
-        {
-            // string A = "STACEY_STRIMPLE";
-            // string B = "RICH_OMLI";
-            string A = "A";
-            string B = "B";
-            Queue<string> nodesToVisit = new Queue<string>();
-            List<string> visitedNodes = new List<string>();
-            List<Node> visitedNodesLevel = new List<Node>();
-            nodesToVisit.Enqueue(A);
+            friendsToVisit.Enqueue(A);
             string[] values = friendsMapping[A].Split(',');
-            //initialise counters
+            //initialise counters to calulate the levels traversing to find B
             int presentLevelNode = 1;
-            // int nextLevelNode = values.Length;
             int nextLevelNode = 0;
             int level = 1;
             int count = 0;
 
-            while (nodesToVisit.Count != 0)
+            while (friendsToVisit.Count != 0)
             {
                 count++;
-                string node = nodesToVisit.Peek();
-                while (visitedNodes.Contains(node))
+                string node = friendsToVisit.Peek();
+                //A check to not visit a member who is already visited
+                while (visitedFriends.Contains(node))
                 {
-                    nodesToVisit.Dequeue();
-                    node = nodesToVisit.Peek();
+                    friendsToVisit.Dequeue();
+                    node = friendsToVisit.Peek();
                 }
-                values = friendsMapping[node].Split(',');
-
-                int x = 0;
-                //Check the values if there is B
-                foreach (string value in values)
+                if (friendsMapping != null && friendsMapping.ContainsKey(node))
                 {
-                    
-                    if (value.Equals(B))
+                    values = friendsMapping[node].Split(',');
+
+                    //Check the values if there is B if friend of any
+                    foreach (string value in values)
                     {
-                        nodesToVisit.Clear();
-                    }
-                    else
-                    {
-                        nodesToVisit.Enqueue(value);
-                        if (!visitedNodes.Contains(value))
+                        if (value.Equals(B))
                         {
-                            nextLevelNode++;
+                            friendsToVisit.Clear();
+                        }
+                        else
+                        {
+                            friendsToVisit.Enqueue(value);
+                            if (!visitedFriends.Contains(value))
+                            {
+                                // incrementing the counter to keep track of the number of memnbers in the next level.
+                                nextLevelNode++;
+                            }
                         }
                     }
-                }
-                if (nodesToVisit.Count > 0)
-                {
-                    nodesToVisit.Dequeue();
-                }
-                visitedNodes.Add(node);
-                visitedNodesLevel.Add(new Node(node, level));
-                if (count == presentLevelNode)
-                {
-                    level++;
-                    count = 0;
-                    presentLevelNode = nextLevelNode;
-                    nextLevelNode = 0;
-                }
-            }
-            foreach (string n in visitedNodes)
-            {
-                Console.WriteLine(n);
-            }
-            Console.WriteLine("------------");
-            foreach (Node n in visitedNodesLevel)
-            {
-                Console.WriteLine(n.name + " -> " + n.level);
-            }
-
-            //   Console.WriteLine("no of ties is " + numberOfLevels);
-        }
-
-        static void distanceBetween()
-        {
-            string A = "A";
-            string B = "B";
-            string ties ="";
-            //Get values of key A 
-            string[] values = friendsMapping[A].Split(',');
-            //Check the values if there is B
-            foreach(string value in values)
-            {
-                ties = A;
-                if(value.Equals(B))
-                {
-                    Console.WriteLine(ties + "->" + B);
-                    break;
-                }
-            }
-            foreach(string value in values)
-            {
-                string[] j = friendsMapping[value].Split(',');
-                foreach(string i in j)
-                {
-                    if(i.Equals(B))
+                    if (friendsToVisit.Count > 0)
                     {
-                        ties = ties + i;
-                        Console.WriteLine(ties + "->" + B);
-                        break;
+                        //remove the person from queue as they are visited
+                        friendsToVisit.Dequeue();
+                    }
+                    visitedFriends.Add(node);
+                    visitedFriendsLevel.Add(new Node(node, level));
+                    //Check to see if all the members of the particular levels are visited to increment the level for next members.
+                    if (count == presentLevelNode)
+                    {
+                        level++;
+                        count = 0;
+                        presentLevelNode = nextLevelNode;
+                        nextLevelNode = 0;
                     }
                 }
-                foreach(string i in j)
-                {
-                    string[] x = friendsMapping[i].Split(',');
-                    foreach (string y in x)
-                    {
-                        if (y.Equals(B))
-                        {
-                            ties = ties + i + y;
-                            Console.WriteLine(ties + "->" + B);
-                            break;
-                        }
-                    }
-                }
-
             }
-
+            
+            Console.WriteLine("------------------------------");
+            foreach (Node member in visitedFriendsLevel)
+            {
+                Console.WriteLine(member.name + " -> " + member.level);
+            }
+            Console.WriteLine("------------------------------");
+            int numberOfLevel = (visitedFriendsLevel[visitedFriendsLevel.Count-1].level)-1;
+            Console.WriteLine("Number of minimum ties required to reach from " + A + " to " + B + " is " + numberOfLevel);
         }
     }
 }
